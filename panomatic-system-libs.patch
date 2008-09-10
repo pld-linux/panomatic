@@ -1,0 +1,60 @@
+--- panomatic-0.9.4/panomatic/Makefile.am.orig	2008-03-02 01:01:10.000000000 +0100
++++ panomatic-0.9.4/panomatic/Makefile.am	2008-09-10 21:11:30.816982280 +0200
+@@ -1,6 +1,6 @@
+ #enblend_LDADD = vigra_impex/libvigra_impex.a -lpng -ljpeg -ltiff
+ 
+-INCLUDES = -I$(top_srcdir)/libsurf -I$(top_srcdir)/vigra/include $(BOOST_CPPFLAGS) -I$(top_srcdir)/zthread/include
++INCLUDES = -I$(top_srcdir)/vigra/include -I$(top_srcdir)/libsurf $(BOOST_CPPFLAGS)
+ AMCXXFLAGS=-DNDEBUG
+ 
+ 
+@@ -9,13 +9,13 @@
+   Homography.cpp  PanoDetector.cpp  PanoDetectorLogic.cpp RansacFiltering.cpp  TestCode.cpp  Utils.cpp main.cpp 
+ 
+ panomatic_LDADD = \
+- ../vigra/src/impex/libvigra_impex.a \
+- ../libtiff/src/libtiff.a \
+- ../libjpeg/src/libjpeg.a \
+- ../libpng/src/libpng.a \
+- ../zlib/src/libz.a \
++ ../vigra/src/impex/libvigra_impex.a \
++ -ltiff \
++ -ljpeg \
++ -lpng \
++ -lz \
+  ../libsurf/libsurf.a \
+- ../zthread/src/libZThread.a \
++ -lZThread \
+  @LINKER_OPTIONS@
+ 
+ # -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -Wall
+--- panomatic-0.9.4/Makefile.am.orig	2008-03-02 01:01:10.000000000 +0100
++++ panomatic-0.9.4/Makefile.am	2008-09-10 21:08:08.784994851 +0200
+@@ -1,2 +1,2 @@
+-SUBDIRS = zlib/src libpng/src libtiff/src libjpeg/src vigra/src/impex zthread/src libsurf panomatic
++SUBDIRS = vigra/src/impex libsurf panomatic
+ 
+--- panomatic-0.9.4/configure.in.orig	2008-03-04 21:34:55.000000000 +0100
++++ panomatic-0.9.4/configure.in	2008-09-10 21:08:25.433001555 +0200
+@@ -75,13 +75,8 @@
+ AC_SUBST(LINKER_OPTIONS)
+ 
+ AC_CONFIG_FILES([Makefile
+-		 zlib/src/Makefile
+-                 libpng/src/Makefile
+-                 libtiff/src/Makefile
+-		 libjpeg/src/Makefile
+                  vigra/src/impex/Makefile
+ 		 libsurf/Makefile
+-		 zthread/src/Makefile
+  		 panomatic/Makefile
+ 		])
+ AC_OUTPUT
+--- panomatic-0.9.4/vigra/src/impex/Makefile.am.orig	2008-02-27 23:24:47.000000000 +0100
++++ panomatic-0.9.4/vigra/src/impex/Makefile.am	2008-09-10 21:44:08.388985632 +0200
+@@ -1,4 +1,4 @@
+-INCLUDES = -I../../include -I../../../libtiff/include -I../../../libpng/include -I../../../libjpeg/include
++INCLUDES = -I../../include
+ 
+ libvigra_impex_sources = \
+  auto_file.hxx \
